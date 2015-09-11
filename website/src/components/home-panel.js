@@ -31,7 +31,7 @@ var HomePanel = React.createClass({
 
         return (
             <div>
-                <p>Welcome to Easy Metra Chicago, where you can consult departure and arrival hours of Metra's rail service. </p>
+                <p>Welcome to Easy Metra Chicago, where you can consult departure and arrival hours of Metra&#39;s rail service. </p>
                 <p>Please enter the following information.</p>
                 <label>Your train line</label>
                 <div className="selectWrap">
