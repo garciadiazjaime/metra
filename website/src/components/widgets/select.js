@@ -11,7 +11,7 @@ var SelectWidget = React.createClass({
     render: function() {
         var optionsRender = this.props.data.map(function(item, i){
             return (
-                <option value={item.id} key={i}>{item.title}</option>
+                <option value={item.id} key={i}>{item.name}</option>
             );
         });
         return (

@@ -6,4 +6,4 @@ from ..models import Line
 class LineSerializer(serializers.HyperlinkedModelSerializer):
   class Meta:
       model = Line
-      fields = ('name', 'code', 'link')
+      fields = ('id', 'name', 'code', 'link')
