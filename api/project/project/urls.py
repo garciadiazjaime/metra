@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from metra import urls
+from metra.api.router import router
+
 
 urlpatterns = [
+	url(r'^api/metra/', include(router.urls)),
 	url(r'^metra/', include('metra.urls', namespace='metra')),
-    url(r'^admin/', include(admin.site.urls)),
+  url(r'^admin/', include(admin.site.urls)),
 ]
