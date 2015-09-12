@@ -1,17 +1,16 @@
 import React from 'react';
 import {Button} from 'react-bootstrap';
 
-const SelectWidget = require('./widgets/Select.react');
-const SelectLine = require('./widgets/SelectLine.react');
-const linesData = require('../../lib/lines.js');
-const stations = linesData[0].stations;
-const LineActions = require('../actions/LineActions');
-const LineStore = require('../stores/LineStore');
+import SelectWidget from './widgets/Select.react';
+import SelectLine from './widgets/SelectLine.react';
+import LineActions from '../actions/LineActions';
+import LineStore from '../stores/LineStore';
 
 
 function getLineState() {
   return {
-    lines: LineStore.getLines()
+    lines: LineStore.getLines(),
+    stations: []
   };
 }
 
@@ -20,7 +19,7 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
-    this.state = {lines: []};
+    this.state = {lines: [], stations: []};
   }
 
   componentDidMount() {
@@ -45,12 +44,12 @@ export default class Home extends React.Component {
         <div className="stationRow">
           <label>Your departing station</label>
           <div className="selectWrap">
-            <SelectWidget data={stations} defaultMsg="Select station a" name="stationFrom" handleChange={this.handleChange}/>
+            <SelectWidget data={this.state.stations} defaultMsg="Select station a" name="stationFrom" handleChange={this.handleChange}/>
           </div>
         </div><div className="stationRow">
           <label>Your destination station</label>
           <div className="selectWrap">
-            <SelectWidget data={stations} defaultMsg="Select station b" name="stationTo" handleChange={this.handleChange}/>
+            <SelectWidget data={this.state.stations} defaultMsg="Select station b" name="stationTo" handleChange={this.handleChange}/>
           </div>
         </div>
         <Button onClick={this.handleClick}><span className="rightButtonDecoration">View Schedule</span></Button>

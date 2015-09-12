@@ -29,7 +29,6 @@ function getHTML(data) {
     '<link rel="icon" type="image/png" href="/img/favicon.ico">' +
     '<meta charset="utf-8">' +
     '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">' +
-    '<meta name="author" content="http://mintitmedia.com">' +
     '</head>' +
     '<body>' +
     '<div id="app">' + data + '</div>' +

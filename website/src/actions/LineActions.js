@@ -1,8 +1,8 @@
-const AppDispatcher = require('../dispatcher/AppDispatcher');
-const LineConstants = require('../constants/LineConstants');
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import LineConstants from '../constants/LineConstants';
 
 
-const LineActions = {
+export default {
 
   requestLines() {
     AppDispatcher.dispatch({
@@ -18,5 +18,3 @@ const LineActions = {
   }
 
 };
-
-module.exports = LineActions;

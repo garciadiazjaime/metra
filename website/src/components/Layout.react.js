@@ -1,8 +1,8 @@
 import React from 'react';
 import {RouteHandler} from 'react-router'
 
-const HeaderSection = require('./Header.react');
-const FooterSection = require('./Footer.react');
+import HeaderSection from './Header.react';
+import FooterSection from './Footer.react';
 
 
 export default class Layout extends React.Component{
