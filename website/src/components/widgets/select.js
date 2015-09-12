@@ -1,15 +1,12 @@
 'use strict';
 
-var React = require('react');
-var rb = require('react-bootstrap');
-var Row = rb.Row;
-var Col = rb.Col;
+import React from 'react';
 
 
-var SelectWidget = React.createClass({
+export default class SelectWidget extends React.Component {
     
-    render: function() {
-        var optionsRender = this.props.data.map(function(item, i){
+    render() {
+        const optionsRender = this.props.data.map(function(item, i){
             return (
                 <option value={item.id} key={i}>{item.name}</option>
             );
@@ -21,6 +18,4 @@ var SelectWidget = React.createClass({
             </select>
         );
     }
-});
-
-module.exports = SelectWidget;
+};

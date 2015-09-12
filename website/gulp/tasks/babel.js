@@ -9,7 +9,7 @@ var react = require('gulp-react');
 
 function babelTask(){
   return gulp.src('src/**/*.js')
-    .pipe(changed('build/'))
+    // .pipe(changed('build/'))
     .pipe(babel())
       .on('error', function(err){
         gutil.log(chalk.red('Error during babel transpile in ') + chalk.green(err.fileName));
@@ -17,7 +17,7 @@ function babelTask(){
       })
     .pipe(gulp.dest('build/'))
     .on('end', function(){
-      gutil.log('Babel Complete');
+      // gutil.log('Babel Complete');
     });
 }
 
