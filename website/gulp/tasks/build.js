@@ -3,7 +3,6 @@ gulp.task('build', function(callback) {
     var gulp = require('gulp');
     var runSequence = require('run-sequence');
     runSequence('delete',
-        'jsx',
         'babel',
         'reactify',
         callback);

@@ -1,13 +1,19 @@
-'use strict';
-
 import React from 'react';
 import {Button} from 'react-bootstrap';
 
-const SelectWidget = require('./widgets/select');
-const SelectLine = require('./select-line');
+const SelectWidget = require('./widgets/Select.react');
+const SelectLine = require('./widgets/SelectLine.react');
 const linesData = require('../../lib/lines.js');
 const stations = linesData[0].stations;
+const LineActions = require('../actions/LineActions');
+const LineStore = require('../stores/LineStore');
 
+
+function getLineState() {
+  return {
+    lines: LineStore.getLines()
+  };
+}
 
 export default class Home extends React.Component {
 
@@ -18,17 +24,13 @@ export default class Home extends React.Component {
   }
 
   componentDidMount() {
-    var apiURL = 'http://127.0.0.1:8000/api/metra/lines/';
-    axios.get(apiURL)
-      .then(function (response) {
-        console.log(response.data);
-        this.setState({
-          lines: response.data
-        })
-      }.bind(this))
-      .catch(function (response) {
-        console.log(response);
-      })
+    LineActions.requestLines();
+    LineStore.addChangeListener(this._onChange.bind(this));
+    this.setState({});
+  }
+
+  componentWillUnmount() {
+    LineStore.removeChangeListener(this._onChange);
   }
 
   render() {
@@ -65,6 +67,10 @@ export default class Home extends React.Component {
   handleChange(e) {
     console.log('handleChange');
     console.log(e.target.value);
+  }
+
+  _onChange(){
+    this.setState(getLineState());
   }
 };
 
