@@ -1,9 +1,7 @@
 import React from 'react';
 import {Button} from 'react-bootstrap';
 
-const TableWidget = require('./Table.react');
-const linesData = require('../../../lib/lines.js');
-const schedule = linesData[0].stations[0].schedule;
+import TableWidget from './Table.react';
 
 
 export default class SchedulePanel extends React.Component {
@@ -11,6 +9,7 @@ export default class SchedulePanel extends React.Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
+    this.state = {schedule: []}
   }
 
   handleClick(e) {
@@ -25,7 +24,7 @@ export default class SchedulePanel extends React.Component {
       <div>
         <h2 id="scheduleTitle">Union Pacific/ North line’s schedule <span className="small">From Zion to Kenosha</span></h2>
   
-        <TableWidget data={schedule} dataRef={this.props.scheduleRef} id="scheduleTable">
+        <TableWidget data={this.state.schedule} dataRef={this.props.scheduleRef} id="scheduleTable">
           <div className="row">
             <div className="col-xs-3"><span className="hiddenXS">Scheduled</span> departure<span className="smallNote">*</span></div>
             <div className="col-xs-3"><span className="hiddenXS">Scheduled</span> arrival<span className="smallNote">*</span></div>
