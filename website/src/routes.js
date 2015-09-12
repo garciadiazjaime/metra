@@ -3,16 +3,17 @@ var ReactRouter = require('react-router');
 var Route = ReactRouter.Route;
 var DefaultRoute = ReactRouter.DefaultRoute;
 
-var Layout = require('./components/layout');
-var HomePanel = require('./components/home-panel');
-var SchedulePanel = require('./components/schedule-panel');
-var AboutusPanel = require('./components/aboutus-panel');
+var Layout = require('./components/Layout.react');
+var Home = require('./components/Home.react');
+var Aboutus = require('./components/Aboutus.react');
+var Schedule = require('./components/widgets/Schedule.react');
+
 
 var routes = (
 	<Route path="/" handler={Layout}>
-		<DefaultRoute name="home" handler={HomePanel}/>
-		<Route name="schedule" path="/schedule"  handler={SchedulePanel} />
-		<Route name="aboutus" path="/aboutus" handler={AboutusPanel} />
+		<DefaultRoute name="home" handler={Home} />
+		<Route name="schedule" path="/schedule"  handler={Schedule} />
+		<Route name="aboutus" path="/aboutus" handler={Aboutus} />
 	</Route>
 );
 

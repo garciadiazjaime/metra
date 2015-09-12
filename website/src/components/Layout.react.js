@@ -1,10 +1,8 @@
-'use strict';
-
 import React from 'react';
 import {RouteHandler} from 'react-router'
 
-const HeaderSection = require('./header-section');
-const FooterSection = require('./footer-section');
+const HeaderSection = require('./Header.react');
+const FooterSection = require('./Footer.react');
 
 
 export default class Layout extends React.Component{

@@ -1,10 +1,8 @@
-'use strict';
-
 import React from 'react';
 import {Button} from 'react-bootstrap';
 
-const TableWidget = require('./widgets/table');
-const linesData = require('../../lib/lines.js');
+const TableWidget = require('./Table.react');
+const linesData = require('../../../lib/lines.js');
 const schedule = linesData[0].stations[0].schedule;
 
 
