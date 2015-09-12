@@ -6,5 +6,5 @@ node_modules/
 npm-debug.log
 assets/static/
 website/build
-website/public/bundle.js
-website/public/vendor.js
+website/public/*.js
+website/public/*.css
