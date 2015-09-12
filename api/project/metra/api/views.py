@@ -9,5 +9,12 @@ class LineViewSet(viewsets.ModelViewSet):
   serializer_class = LineSerializer
 
 class StationViewSet(viewsets.ModelViewSet):
-	queryset = Station.objects.filter(line=1)
+	queryset = Station.objects.all()
 	serializer_class = StationSerializer
+
+	def get_queryset(self):
+		queryset = Station.objects.filter()
+		line = self.request.query_params.get('line', None)
+		if line is not None:
+			queryset = queryset.filter(line=line)
+		return queryset

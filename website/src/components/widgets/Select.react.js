@@ -11,7 +11,6 @@ export default class SelectWidget extends React.Component {
         });
         return (
             <select onChange={this.props.handleChange}>
-                <option value="">{this.props.defaultMsg}</option>
                 {optionsRender}
             </select>
         );
