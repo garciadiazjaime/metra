@@ -17,15 +17,17 @@ function getLineState() {
 export default class Home extends React.Component {
 
   constructor(props) {
+
     super(props);
     this.handleClick = this.handleClick.bind(this);
-    this.state = {lines: [], stations: []};
+    this.state = getLineState();
   }
 
   componentDidMount() {
-    LineActions.requestLines();
     LineStore.addChangeListener(this._onChange.bind(this));
-    this.setState({});
+    if(!this.state.lines.length){
+      LineActions.requestLines();
+    }
   }
 
   componentWillUnmount() {

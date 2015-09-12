@@ -11,7 +11,7 @@ const _data = {
   lines: []
 };
 
-const LineStore = assign({}, EventEmitter.prototype, {
+let LineStore = assign({}, EventEmitter.prototype, {
 
   getLines() {
     return _data.lines;
@@ -35,19 +35,21 @@ function setLines(lines){
 }
 
 AppDispatcher.register(function(action){
+
   switch(action.actionType) {
     case LineConstants.REQUEST_LINES:
-        MetraAPI.getAllLines().then(function (response) {
+      MetraAPI.getAllLines()
+        .then(function (response) {
           LineActions.setLines(response.data);
         })
         .catch(function (response) {
           console.log(response);
         });
-      break;
+    break;
     case LineConstants.SET_LINES:
-        setLines(action.lines);
-        LineStore.emitChange();
-      break;
+      setLines(action.lines);
+      LineStore.emitChange();
+    break;
     default:
       // no op
   }
