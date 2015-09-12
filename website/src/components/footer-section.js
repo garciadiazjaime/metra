@@ -1,20 +1,18 @@
 'use strict';
 
-var React = require('react');
+import React from 'react';
 
 
-var FooterSection = React.createClass({
+export default class Footer extends React.Component {
 
-  render: function() {
+  render() {
     return (
-        <div className="container">
-            <p>
-                Powered by 
-                <a href="http://mintitmedia.com/" title="Mint IT Media - Design and web development" target="_blank">Mint</a>
-            </p>
-        </div>
+      <div className="container">
+        <p>
+          Powered by 
+          <a href="http://mintitmedia.com/" title="Mint IT Media - Design and web development" target="_blank">Mint</a>
+        </p>
+      </div>
     );
   }
-});
-
-module.exports = FooterSection;
+};

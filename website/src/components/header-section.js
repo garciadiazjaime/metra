@@ -1,35 +1,32 @@
 'use strict';
 
-var React = require('react');
-var ReactRouter = require('react-router');
-var rb = require('react-bootstrap');
-var Row = rb.Row;
-var Col = rb.Col;
-var Button = rb.Button;
-var Link = ReactRouter.Link;
+import React from 'react';
+import {Button} from 'react-bootstrap';
 
-var HeaderSection = React.createClass({
 
-	mixins : [ReactRouter.Navigation],
+export default class Header extends React.Component {
 
-	handleClick: function(){
-		console.log('handleClick');
-        this.transitionTo('aboutus');
-	},
+	handleClick(goTo, e){
+		console.log('handleClick', goTo);
+		e.preventDefault();
+    this.context.router.transitionTo(goTo);
+	}
 
-	render: function() {
+	render() {
 		return (
 			<div className="container">
 				<h1 id="brand">
-					<Link to="home" title="Return to home">
+					<a onClick={this.handleClick.bind(this, 'home')} title="Return to home">
 						<em>Branding</em>
 						<span className="hidden">Train schedules in Chicago</span>
-					</Link>
+					</a>
 				</h1>
-				<Button id="infoButton" onClick={this.handleClick}>i</Button>
+				<Button id="infoButton" onClick={this.handleClick.bind(this, 'aboutus')}>i</Button>
 			</div>
 		);
 	}
-});
+};
 
-module.exports = HeaderSection;
+Header.contextTypes = {
+  router: React.PropTypes.func.isRequired
+};

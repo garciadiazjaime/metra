@@ -6,6 +6,8 @@ class LineAdmin(admin.ModelAdmin):
 
 class StationAdmin(admin.ModelAdmin):
 	list_display = ('code', 'name', 'latitud', 'longitude', 'zone', 'url', 'line')
+	list_filter = ('line',)
+	search_fields = ['code', 'name']
 
 admin.site.register(Line, LineAdmin)
 admin.site.register(Zone)
