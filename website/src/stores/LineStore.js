@@ -8,13 +8,19 @@ import MetraAPI from '../utils/MetraAPIUtils';
 const CHANGE_EVENT = 'change';
 
 const _data = {
-  lines: []
+  cacheStations: {},
+  lines: [],
+  stations: []
 };
 
 let LineStore = assign({}, EventEmitter.prototype, {
 
   getLines() {
     return _data.lines;
+  },
+
+  getStations() {
+    return _data.stations;
   },
 
   emitChange() {
@@ -30,26 +36,58 @@ let LineStore = assign({}, EventEmitter.prototype, {
   }
 });
 
+
 function setLines(lines){
   _data.lines = lines;
+}
+
+function cacheStations(line, stations) {
+  if(!_data.cacheStations[line]){
+    _data.cacheStations[line] = stations;
+  }
+}
+
+function setStations(stations) {
+  _data.stations = stations ? stations : [];
 }
 
 AppDispatcher.register(function(action){
 
   switch(action.actionType) {
+    // ---- LINES
     case LineConstants.REQUEST_LINES:
+    if(!_data.lines.length){
       MetraAPI.getAllLines()
         .then(function (response) {
-          LineActions.setLines(response.data);
+          setLines(response.data);
+          LineStore.emitChange();
         })
         .catch(function (response) {
           console.log(response);
         });
+    }
     break;
-    case LineConstants.SET_LINES:
-      setLines(action.lines);
-      LineStore.emitChange();
+
+    // ---- STATIONS
+    case LineConstants.REQUEST_STATIONS:
+      if(action.line && !_data.cacheStations[action.line]){
+        MetraAPI.getStationsFromLine(action.line)
+          .then(function (response) {
+            cacheStations(action.line, response.data);
+            setStations(response.data);
+            LineStore.emitChange();
+          })
+          .catch(function (response) {
+            console.log(response);
+          });
+      }
+      else{
+        setStations(_data.cacheStations[action.line]);
+        LineStore.emitChange();
+      }
     break;
+
+
     default:
       // no op
   }

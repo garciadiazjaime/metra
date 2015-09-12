@@ -4,17 +4,19 @@ import LineConstants from '../constants/LineConstants';
 
 export default {
 
+  // ---- LINES
   requestLines() {
     AppDispatcher.dispatch({
       actionType: LineConstants.REQUEST_LINES
     });
   },
 
-  setLines(lines) {
-  	AppDispatcher.dispatch({
-  		actionType: LineConstants.SET_LINES,
-  		lines: lines
-  	})
+  // ---- STATIONS
+  requestSations(line) {
+    AppDispatcher.dispatch({
+      actionType: LineConstants.REQUEST_STATIONS,
+      line: line
+    })
   }
 
 };

@@ -10,7 +10,7 @@ import LineStore from '../stores/LineStore';
 function getLineState() {
   return {
     lines: LineStore.getLines(),
-    stations: []
+    stations: LineStore.getStations(),
   };
 }
 
@@ -25,9 +25,7 @@ export default class Home extends React.Component {
 
   componentDidMount() {
     LineStore.addChangeListener(this._onChange.bind(this));
-    if(!this.state.lines.length){
-      LineActions.requestLines();
-    }
+    LineActions.requestLines();
   }
 
   componentWillUnmount() {
@@ -41,17 +39,17 @@ export default class Home extends React.Component {
         <p>Please enter the following information.</p>
         <label>Your train line</label>
         <div className="selectWrap">
-          <SelectLine data={this.state.lines} defaultMsg="Select train line" name="line" handleChange={this.handleChange}/>
+          <SelectLine data={this.state.lines} name="line" handleChange={this._onLineChange}/>
         </div>
         <div className="stationRow">
           <label>Your departing station</label>
           <div className="selectWrap">
-            <SelectWidget data={this.state.stations} defaultMsg="Select station a" name="stationFrom" handleChange={this.handleChange}/>
+            <SelectWidget data={this.state.stations} defaultMsg="Select station a" name="stationFrom" handleChange={this._onStationChange}/>
           </div>
         </div><div className="stationRow">
           <label>Your destination station</label>
           <div className="selectWrap">
-            <SelectWidget data={this.state.stations} defaultMsg="Select station b" name="stationTo" handleChange={this.handleChange}/>
+            <SelectWidget data={this.state.stations} defaultMsg="Select station b" name="stationTo" handleChange={this._onStationChange}/>
           </div>
         </div>
         <Button onClick={this.handleClick}><span className="rightButtonDecoration">View Schedule</span></Button>
@@ -65,9 +63,15 @@ export default class Home extends React.Component {
     this.context.router.transitionTo('schedule');
   }
 
-  handleChange(e) {
-    console.log('handleChange');
+  _onLineChange(e) {
+    console.log('_onLineChange');
     console.log(e.target.value);
+    LineActions.requestSations(e.target.value);
+  }
+
+  _onStationChange(e) {
+    console.log('_onStationChange');
+    console.log(e.target.value); 
   }
 
   _onChange(){
