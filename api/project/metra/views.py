@@ -2,7 +2,7 @@ import json
 
 from django.shortcuts import render, HttpResponse
 
-from .models import Line, Station
+from .models import Line, Station, Ride
 
 
 def index(request):
@@ -11,9 +11,10 @@ def index(request):
 	# result = Station.objects.save_stations_from_metra(data)
 	return HttpResponse(json.dumps(data), content_type="application/json")
 
-def schedule(request):
+def request_schedule(request):
 	for line in Line.objects.all():
 		stations = Station.objects.filter(line=line)
+		print line
 		for i in range(0, stations.count() -1 ):
 			for j in range(i+1, stations.count()):
 				print '\t',stations[i],'\t\t', stations[j]
@@ -21,3 +22,18 @@ def schedule(request):
 			break
 		break
 	return HttpResponse('job started...<br />check logs')
+
+def run_schedule_task(request):
+	line = 'UP-N'
+	station_from = 'KENOSHA'
+	station_to = 'NCHICAGO'
+	day = 1
+	data = Station.objects.task_schedule(line, station_from, station_to)
+	
+	line_obj = Line.objects.get(code=line)
+	station_from_obj = Station.objects.get(code=station_from)
+	station_to_obj = Station.objects.get(code=station_to)
+	response = Ride.objects.save_ride_from_metra(line_obj, station_from_obj, station_to_obj, day, data)
+
+	return HttpResponse(json.dumps(response), content_type="application/json")
+

@@ -45,12 +45,30 @@ class StationManager(models.Manager):
 							print self.create(code=station['code'], name=station['name'], line_id=line['line_id'])
 		return 'nice'
 
-	def get_schedule(self):
+	def task_schedule(self, line, station_from, stations_to):
 		response = []
-		# url = 'http://metrarail.com/content/metra/en/home/jcr:content/trainTracker.get_train_data.json?line=NCS&origin=ANTIOCH&destination=LAKEVILLA&date=09/14/2015&futureOnly=false'
-		# http://metrarail.com/content/metra/en/home/jcr:content/trainTracker.get_train_data.json?line=MD-N&origin=PRAIRIEXNG&destination=NGLENVIEW&date=09/13/2015&time=12:00:00&futureOnly=false&_=1442166174899
-		# data = requests.get(url).json()
-		# print data
-		# return data
+		print line, station_from, stations_to
+		url = 'http://metrarail.com/content/metra/en/home/jcr:content/trainTracker.get_train_data.json?line=' + line + '&origin=' + station_from + '&destination=' + stations_to + '&date=09/14/2015&futureOnly=false'
+		print url
+		data = requests.get(url).json()
+		return data
+
+class RideManager(models.Manager):
+
+	def save_ride_from_metra(self, line, station_from, station_to, day, data):
+		if self.filter(line=line, station_from=station_from, station_to=station_to, day=day).count() == 0:
+			for key in data:
+				if 'train' in key:
+					ride_info = {
+						'time_start': data[key]['scheduled_dpt_time'],
+						'time_end': data[key]['scheduled_arv_time'],
+						'trip': data[key]['trip_id'],
+						'train_num': data[key]['train_num']
+					}
+					print 'ride_info', ride_info
+					self.create(line=line, station_from=station_from, station_to=station_to, day=day, time_start=ride_info['time_start'], time_end=ride_info['time_end'], trip=ride_info['trip'], train_num=ride_info['train_num'])
+		else:
+			print 'Ride', line, ':', station_from,',', station_to,'has been already saved'
+		return True
 
 
