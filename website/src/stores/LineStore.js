@@ -9,6 +9,7 @@ const CHANGE_EVENT = 'change';
 
 const _data = {
   cacheStations: {},
+  selectedLine: null,
   lines: [],
   stations: []
 };
@@ -17,6 +18,10 @@ let LineStore = assign({}, EventEmitter.prototype, {
 
   getLines() {
     return _data.lines;
+  },
+
+  getSelectedLine() {
+    return _data.selectedLine;
   },
 
   getStations() {
@@ -41,6 +46,10 @@ function setLines(lines){
   _data.lines = lines;
 }
 
+function setSelectedLine(line){
+  _data.selectedLine = line;
+}
+
 function cacheStations(line, stations) {
   if(!_data.cacheStations[line]){
     _data.cacheStations[line] = stations;
@@ -61,6 +70,8 @@ AppDispatcher.register(function(action){
         .then(function (response) {
           setLines(response.data);
           LineStore.emitChange();
+          LineActions.requestSations(response.data[0].id);
+          setSelectedLine(response.data[0].id);
         })
         .catch(function (response) {
           console.log(response);
@@ -70,6 +81,7 @@ AppDispatcher.register(function(action){
 
     // ---- STATIONS
     case LineConstants.REQUEST_STATIONS:
+      setSelectedLine(action.line);
       if(action.line && !_data.cacheStations[action.line]){
         MetraAPI.getStationsFromLine(action.line)
           .then(function (response) {
