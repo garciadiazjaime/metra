@@ -99,6 +99,15 @@ AppDispatcher.register(function(action){
       }
     break;
 
+    // ---- SCHEDULE
+    case LineConstants.REQUEST_SCHEDULE:
+      MetraAPI.getSchedule()
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (response) {
+
+        });
 
     default:
       // no op

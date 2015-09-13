@@ -10,7 +10,7 @@ class Line(models.Model):
 	objects = LineManager()
 
 	def __unicode__(self):
-		return "%s" % self.name
+		return "%s" % self.code
 
 class Zone(models.Model):
 	name = models.CharField(max_length=150)

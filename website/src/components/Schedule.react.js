@@ -1,7 +1,8 @@
 import React from 'react';
 import {Button} from 'react-bootstrap';
 
-import TableWidget from './Table.react';
+import TableWidget from './widgets/Table.react';
+import LineActions from '../actions/LineActions';
 
 
 export default class SchedulePanel extends React.Component {
@@ -12,10 +13,9 @@ export default class SchedulePanel extends React.Component {
     this.state = {schedule: []}
   }
 
-  handleClick(e) {
-    console.log('handleClick');
-    e.preventDefault();
-    this.context.router.transitionTo('home');
+  componentDidMount() {
+    console.log('go');
+    LineActions.requestSchedule();
   }
 
   render() {
@@ -39,6 +39,12 @@ export default class SchedulePanel extends React.Component {
         
       </div>
     );
+  }
+
+  handleClick(e) {
+    console.log('handleClick');
+    e.preventDefault();
+    this.context.router.transitionTo('home');
   }
 };
 

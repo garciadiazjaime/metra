@@ -2,7 +2,6 @@ import requests, json
 
 from django.db import models
 
-from .utils import bubble_sort
 
 class LineManager(models.Manager):
 	
@@ -45,3 +44,13 @@ class StationManager(models.Manager):
 						if 'code' in station and 'name' in station:
 							print self.create(code=station['code'], name=station['name'], line_id=line['line_id'])
 		return 'nice'
+
+	def get_schedule(self):
+		response = []
+		# url = 'http://metrarail.com/content/metra/en/home/jcr:content/trainTracker.get_train_data.json?line=NCS&origin=ANTIOCH&destination=LAKEVILLA&date=09/14/2015&futureOnly=false'
+		# http://metrarail.com/content/metra/en/home/jcr:content/trainTracker.get_train_data.json?line=MD-N&origin=PRAIRIEXNG&destination=NGLENVIEW&date=09/13/2015&time=12:00:00&futureOnly=false&_=1442166174899
+		# data = requests.get(url).json()
+		# print data
+		# return data
+
+
