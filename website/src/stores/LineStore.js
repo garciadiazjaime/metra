@@ -11,7 +11,8 @@ const _data = {
   cacheStations: {},
   selectedLine: null,
   lines: [],
-  stations: []
+  stations: [],
+  ride: []
 };
 
 let LineStore = assign({}, EventEmitter.prototype, {
@@ -26,6 +27,10 @@ let LineStore = assign({}, EventEmitter.prototype, {
 
   getStations() {
     return _data.stations;
+  },
+
+  getRide() {
+    return _data.ride;
   },
 
   emitChange() {
@@ -58,6 +63,10 @@ function cacheStations(line, stations) {
 
 function setStations(stations) {
   _data.stations = stations ? stations : [];
+}
+
+function setRide(ride) {
+  _data.ride = ride;
 }
 
 AppDispatcher.register(function(action){
@@ -103,10 +112,12 @@ AppDispatcher.register(function(action){
     case LineConstants.REQUEST_SCHEDULE:
       MetraAPI.getSchedule()
         .then(function (response) {
-          console.log(response);
+          // cacheRides(action.line, response.data);
+          setRide(response.data);
+          LineStore.emitChange();
         })
         .catch(function (response) {
-
+          console.log(response);
         });
 
     default:

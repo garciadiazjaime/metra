@@ -1,8 +1,16 @@
 import React from 'react';
 import {Button} from 'react-bootstrap';
 
-import TableWidget from './widgets/Table.react';
+import RideTableWidget from './widgets/RideTable.react';
 import LineActions from '../actions/LineActions';
+import LineStore from '../stores/LineStore';
+
+
+function getRideState() {
+  return {
+    ride: LineStore.getRide()
+  };
+}
 
 
 export default class SchedulePanel extends React.Component {
@@ -10,11 +18,11 @@ export default class SchedulePanel extends React.Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
-    this.state = {schedule: []}
+    this.state = getRideState();
   }
 
   componentDidMount() {
-    console.log('go');
+    LineStore.addChangeListener(this._onChange.bind(this));
     LineActions.requestSchedule();
   }
 
@@ -24,14 +32,14 @@ export default class SchedulePanel extends React.Component {
       <div>
         <h2 id="scheduleTitle">Union Pacific/ North line’s schedule <span className="small">From Zion to Kenosha</span></h2>
   
-        <TableWidget data={this.state.schedule} dataRef={this.props.scheduleRef} id="scheduleTable">
+        <RideTableWidget data={this.state.ride} id="scheduleTable">
           <div className="row">
             <div className="col-xs-3"><span className="hiddenXS">Scheduled</span> departure<span className="smallNote">*</span></div>
             <div className="col-xs-3"><span className="hiddenXS">Scheduled</span> arrival<span className="smallNote">*</span></div>
             <div className="col-xs-3">Time</div>
             <div className="col-xs-3">Train</div> 
           </div>
-        </TableWidget>
+        </RideTableWidget>
 
         <Button onClick={this.handleClick}><span className="rightButtonDecoration">New search</span></Button>
         
@@ -45,6 +53,10 @@ export default class SchedulePanel extends React.Component {
     console.log('handleClick');
     e.preventDefault();
     this.context.router.transitionTo('home');
+  }
+
+  _onChange() {
+    this.setState(getRideState());
   }
 };
 

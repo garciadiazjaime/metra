@@ -11,8 +11,7 @@ export default {
   },
 
   getSchedule() {
-  	const metraApi = 'http://metrarail.com/content/metra/en/home/jcr:content/trainTracker.get_train_data.json?line=NCS&origin=ANTIOCH&destination=LAKEVILLA&date=09/14/2015&futureOnly=false';
-  	return axios.get(metraApi);
+  	return axios.get(apiURL + 'rides?line=UP-N&station_from=KENOSHA&station_to=WINTHROP&day=1');
   }
 
 };
