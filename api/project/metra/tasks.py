@@ -2,7 +2,7 @@ from celery import Celery
 
 from .models import Ride
 
-app = Celery('metra_tasks', broker='django://')
+app = Celery('metra_tasks', backend='rpc://', broker='django://')
 
 METRA_API = 'http://metrarail.com/content/metra/en/home/jcr:content/trainTracker.get_train_data.json'
 
