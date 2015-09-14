@@ -39,7 +39,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'metra',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'djcelery',
+    'kombu.transport.django'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -118,3 +120,8 @@ REST_FRAMEWORK = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+import djcelery
+djcelery.setup_loader()
+
+BROKER_URL = 'django://'
