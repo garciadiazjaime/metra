@@ -17,6 +17,13 @@ export default {
       actionType: LineConstants.REQUEST_STATIONS,
       line: line
     })
+  },
+
+  // ---- SCHEDULE
+  requestSchedule() {
+    AppDispatcher.dispatch({
+      actionType: LineConstants.REQUEST_SCHEDULE
+    })
   }
 
 };

@@ -9,8 +9,10 @@ const CHANGE_EVENT = 'change';
 
 const _data = {
   cacheStations: {},
+  selectedLine: null,
   lines: [],
-  stations: []
+  stations: [],
+  ride: []
 };
 
 let LineStore = assign({}, EventEmitter.prototype, {
@@ -19,8 +21,16 @@ let LineStore = assign({}, EventEmitter.prototype, {
     return _data.lines;
   },
 
+  getSelectedLine() {
+    return _data.selectedLine;
+  },
+
   getStations() {
     return _data.stations;
+  },
+
+  getRide() {
+    return _data.ride;
   },
 
   emitChange() {
@@ -41,6 +51,10 @@ function setLines(lines){
   _data.lines = lines;
 }
 
+function setSelectedLine(line){
+  _data.selectedLine = line;
+}
+
 function cacheStations(line, stations) {
   if(!_data.cacheStations[line]){
     _data.cacheStations[line] = stations;
@@ -49,6 +63,10 @@ function cacheStations(line, stations) {
 
 function setStations(stations) {
   _data.stations = stations ? stations : [];
+}
+
+function setRide(ride) {
+  _data.ride = ride;
 }
 
 AppDispatcher.register(function(action){
@@ -61,6 +79,8 @@ AppDispatcher.register(function(action){
         .then(function (response) {
           setLines(response.data);
           LineStore.emitChange();
+          LineActions.requestSations(response.data[0].id);
+          setSelectedLine(response.data[0].id);
         })
         .catch(function (response) {
           console.log(response);
@@ -70,6 +90,7 @@ AppDispatcher.register(function(action){
 
     // ---- STATIONS
     case LineConstants.REQUEST_STATIONS:
+      setSelectedLine(action.line);
       if(action.line && !_data.cacheStations[action.line]){
         MetraAPI.getStationsFromLine(action.line)
           .then(function (response) {
@@ -87,6 +108,17 @@ AppDispatcher.register(function(action){
       }
     break;
 
+    // ---- SCHEDULE
+    case LineConstants.REQUEST_SCHEDULE:
+      MetraAPI.getSchedule()
+        .then(function (response) {
+          // cacheRides(action.line, response.data);
+          setRide(response.data);
+          LineStore.emitChange();
+        })
+        .catch(function (response) {
+          console.log(response);
+        });
 
     default:
       // no op

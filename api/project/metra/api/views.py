@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 
-from ..models import Line, Station
-from .serializers import LineSerializer, StationSerializer
+from ..models import Line, Station, Ride
+from .serializers import LineSerializer, StationSerializer, RideSerializer
 
 # ViewSets define the view behavior.
 class LineViewSet(viewsets.ModelViewSet):
@@ -17,4 +17,22 @@ class StationViewSet(viewsets.ModelViewSet):
 		line = self.request.query_params.get('line', None)
 		if line is not None:
 			queryset = queryset.filter(line=line)
+		return queryset
+
+class RidesViewSet(viewsets.ModelViewSet):
+	queryset = Ride.objects.all()
+	serializer_class = RideSerializer
+
+	def get_queryset(self):
+		queryset = Ride.objects.filter()
+		line = self.request.query_params.get('line', None)
+		station_from = self.request.query_params.get('station_from', None)
+		station_to = self.request.query_params.get('station_to', None)
+		day = self.request.query_params.get('day', None)
+		if line and station_from and station_to and day:
+			line_obj = Line.objects.get(code=line)
+			station_from_obj = Station.objects.get(code=station_from)
+			station_to_obj = Station.objects.get(code=station_to)
+			if line_obj and station_from_obj and station_to_obj:
+				queryset = queryset.filter(line=line_obj, station_from=station_from_obj, station_to=station_to_obj, day=int(day))
 		return queryset

@@ -2,7 +2,6 @@ import requests, json
 
 from django.db import models
 
-from .utils import bubble_sort
 
 class LineManager(models.Manager):
 	
@@ -45,3 +44,24 @@ class StationManager(models.Manager):
 						if 'code' in station and 'name' in station:
 							print self.create(code=station['code'], name=station['name'], line_id=line['line_id'])
 		return 'nice'
+
+
+class RideManager(models.Manager):
+
+	def save_ride_from_metra(self, line, station_from, station_to, day, data):
+		if self.filter(line=line, station_from=station_from, station_to=station_to, day=day).count() == 0:
+			for key in data:
+				if 'train' in key:
+					ride_info = {
+						'time_start': data[key]['scheduled_dpt_time'],
+						'time_end': data[key]['scheduled_arv_time'],
+						'trip': data[key]['trip_id'],
+						'train_num': data[key]['train_num']
+					}
+					print ride_info
+					self.create(line=line, station_from=station_from, station_to=station_to, day=day, time_start=ride_info['time_start'], time_end=ride_info['time_end'], trip=ride_info['trip'], train_num=ride_info['train_num'])
+		else:
+			print "[%s] %s: %s-%s  has been already saved" % (day, line.code, station_from.code, station_to.code)
+		return True
+
+

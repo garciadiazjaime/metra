@@ -11,6 +11,7 @@ function getLineState() {
   return {
     lines: LineStore.getLines(),
     stations: LineStore.getStations(),
+    selectedLine: LineStore.getSelectedLine()
   };
 }
 
@@ -39,7 +40,7 @@ export default class Home extends React.Component {
         <p>Please enter the following information.</p>
         <label>Your train line</label>
         <div className="selectWrap">
-          <SelectLine data={this.state.lines} name="line" handleChange={this._onLineChange}/>
+          <SelectLine data={this.state.lines} name="line" handleChange={this._onLineChange} selectedLine={this.state.selectedLine}/>
         </div>
         <div className="stationRow">
           <label>Your departing station</label>

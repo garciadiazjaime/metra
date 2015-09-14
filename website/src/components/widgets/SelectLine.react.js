@@ -10,8 +10,7 @@ export default class SelectLine extends React.Component {
       );
     });
     return (
-      <select onChange={this.props.handleChange}>
-        <option value="">Select Line</option>
+      <select onChange={this.props.handleChange} value={this.props.selectedLine}>
         {optionsRender}
       </select>
     );
