@@ -12,6 +12,6 @@ export default (
 	<Route path="/" handler={Layout}>
 		<DefaultRoute name="home" handler={Home} />
 		<Route name="aboutus" path="/aboutus" handler={Aboutus} />
-		<Route name="schedule" path="/schedule"  handler={Schedule} />
+		<Route name="schedule" path="/schedule/:line/:stationFrom/:stationTo"  handler={Schedule} />
 	</Route>
 );

@@ -4,12 +4,6 @@ import {Button} from 'react-bootstrap';
 
 export default class Header extends React.Component {
 
-	handleClick(goTo, e){
-		console.log('handleClick', goTo);
-		e.preventDefault();
-    this.context.router.transitionTo(goTo);
-	}
-
 	render() {
 		return (
 			<div className="container">
@@ -22,6 +16,11 @@ export default class Header extends React.Component {
 				<Button id="infoButton" onClick={this.handleClick.bind(this, 'aboutus')}>i</Button>
 			</div>
 		);
+	}
+
+	handleClick(goTo, e){
+		e.preventDefault();
+    this.context.router.transitionTo(goTo);
 	}
 };
 

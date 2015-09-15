@@ -1,5 +1,6 @@
 const assign = require('object-assign');
 const EventEmitter = require('events').EventEmitter;
+
 const AppDispatcher = require('../dispatcher/AppDispatcher');
 const LineConstants = require('../constants/LineConstants');
 const LineActions = require('../actions/LineActions');
@@ -12,7 +13,9 @@ const _data = {
   selectedLine: null,
   lines: [],
   stations: [],
-  ride: []
+  ride: [],
+  stationFrom: null,
+  stationTo: null
 };
 
 let LineStore = assign({}, EventEmitter.prototype, {
@@ -29,8 +32,19 @@ let LineStore = assign({}, EventEmitter.prototype, {
     return _data.stations;
   },
 
+  getSelectedStations() {
+    return {
+      stationFrom: _data.stationFrom,
+      stationTo: _data.stationTo
+    };
+  },
+
   getRide() {
     return _data.ride;
+  },
+
+  setStation(ref, value) {
+    _data[ref] = value;
   },
 
   emitChange() {
@@ -40,7 +54,7 @@ let LineStore = assign({}, EventEmitter.prototype, {
   addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
   },
-
+  
   removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
   }
@@ -63,6 +77,8 @@ function cacheStations(line, stations) {
 
 function setStations(stations) {
   _data.stations = stations ? stations : [];
+  _data['stationFrom'] = stations ? stations[0].id : null;
+  _data['stationTo'] = stations ? stations[ stations.length - 1 ].id : null;
 }
 
 function setRide(ride) {
@@ -74,18 +90,18 @@ AppDispatcher.register(function(action){
   switch(action.actionType) {
     // ---- LINES
     case LineConstants.REQUEST_LINES:
-    if(!_data.lines.length){
-      MetraAPI.getAllLines()
-        .then(function (response) {
-          setLines(response.data);
-          LineStore.emitChange();
-          LineActions.requestSations(response.data[0].id);
-          setSelectedLine(response.data[0].id);
-        })
-        .catch(function (response) {
-          console.log(response);
-        });
-    }
+      if(!_data.lines.length){
+        MetraAPI.getAllLines()
+          .then(function (response) {
+            setLines(response.data);
+            LineStore.emitChange();
+            LineActions.requestSations(response.data[0].id);
+            setSelectedLine(response.data[0].id);
+          })
+          .catch(function (response) {
+            console.log(response);
+          });
+      }
     break;
 
     // ---- STATIONS
@@ -119,6 +135,7 @@ AppDispatcher.register(function(action){
         .catch(function (response) {
           console.log(response);
         });
+    break;
 
     default:
       // no op
