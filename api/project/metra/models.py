@@ -1,5 +1,5 @@
 from django.db import models
-from .managers import LineManager, StationManager
+from .managers import LineManager, StationManager, RideManager
 
 
 class Line(models.Model):
@@ -10,7 +10,7 @@ class Line(models.Model):
 	objects = LineManager()
 
 	def __unicode__(self):
-		return "%s" % self.name
+		return "%s" % self.code
 
 class Zone(models.Model):
 	name = models.CharField(max_length=150)
@@ -31,3 +31,18 @@ class Station(models.Model):
 
 	def __unicode__(self):
 		return "%s" % self.code
+
+class Ride(models.Model):
+	line = models.ForeignKey(Line)
+	station_from = models.ForeignKey(Station, related_name='station_from')
+	station_to = models.ForeignKey(Station, related_name='station_to')
+	time_start = models.TimeField()
+	time_end = models.TimeField()
+	trip = models.CharField(max_length=140)
+	train_num = models.CharField(max_length=140, null=True, blank=True)
+	day = models.IntegerField(null=True, blank=True)
+
+	objects = RideManager()
+
+	def __unicode__(self):
+		return "%s" % self.trip

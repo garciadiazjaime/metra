@@ -4,7 +4,7 @@ var gulp = require("gulp"),
 
 function bowerTask(){
 	return gulp.src([
-		'/Users/garciadiazjaime/Dev/metra/bower_components/bootstrap/dist/css/bootstrap.css'
+		'./bower_components/bootstrap/dist/css/bootstrap.css'
 	])
 	// .pipe(uglify())
 	.pipe(concat('vendor.css'))

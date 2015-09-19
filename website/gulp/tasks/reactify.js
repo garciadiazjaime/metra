@@ -7,7 +7,7 @@ var gulp = require('gulp');
 
 function reactifyTask(){
     return browserify()
-        .require('./src/client.js', {expose: 'myApp'}, reactify)
+        .require('./build/client.js', {expose: 'myApp'}, reactify)
         .transform({global: true}, 
             literalify.configure(
             {

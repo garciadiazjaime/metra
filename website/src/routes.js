@@ -1,19 +1,17 @@
-var React = require('react');
-var ReactRouter = require('react-router');
-var Route = ReactRouter.Route;
-var DefaultRoute = ReactRouter.DefaultRoute;
+import React from 'react';
+import ReactRouter from 'react-router';
+import {Route, DefaultRoute} from 'react-router';
 
-var Layout = require('./components/layout');
-var HomePanel = require('./components/home-panel');
-var SchedulePanel = require('./components/schedule-panel');
-var AboutusPanel = require('./components/aboutus-panel');
+import Layout from './components/Layout.react';
+import Home from './components/Home.react';
+import Aboutus from './components/Aboutus.react';
+import Schedule from './components/Schedule.react';
 
-var routes = (
+
+export default (
 	<Route path="/" handler={Layout}>
-		<DefaultRoute name="home" handler={HomePanel}/>
-		<Route name="schedule" path="/schedule"  handler={SchedulePanel} />
-		<Route name="aboutus" path="/aboutus" handler={AboutusPanel} />
+		<DefaultRoute name="home" handler={Home} />
+		<Route name="aboutus" path="/aboutus" handler={Aboutus} />
+		<Route name="schedule" path="/schedule/:line/:stationFrom/:stationTo"  handler={Schedule} />
 	</Route>
 );
-
-module.exports = routes;
