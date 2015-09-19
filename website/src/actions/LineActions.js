@@ -20,9 +20,13 @@ export default {
   },
 
   // ---- SCHEDULE
-  requestSchedule() {
+  requestSchedule(line, station_from, station_to, day) {
     AppDispatcher.dispatch({
-      actionType: LineConstants.REQUEST_SCHEDULE
+      actionType: LineConstants.REQUEST_SCHEDULE,
+      line: line,
+      station_from: station_from,
+      station_to: station_to,
+      day: day
     })
   }
 

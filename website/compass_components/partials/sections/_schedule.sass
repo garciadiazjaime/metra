@@ -24,17 +24,21 @@ p.smallNote
   text-align: center
   width: 100%
 
+  .smallerText
+    color: $grey
+    font-size: 16px
+
   .row:nth-child(even)
     background: #ebebeb
 
-  .col-xs-3
+  .col-xs-4, .col-xs-2
     font-size: 19px
     padding: 10px 7px
 
   .row:first-child
     background: transparent
 
-    .col-xs-3
+    .col-xs-4, .col-xs-2
       color: $red
       @extend %amble-bold
       font-size: 15px

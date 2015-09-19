@@ -31,8 +31,8 @@ class RidesViewSet(viewsets.ModelViewSet):
 		day = self.request.query_params.get('day', None)
 		if line and station_from and station_to and day:
 			line_obj = Line.objects.get(code=line)
-			station_from_obj = Station.objects.get(code=station_from)
-			station_to_obj = Station.objects.get(code=station_to)
+			station_from_obj = Station.objects.filter(code=station_from)[0]
+			station_to_obj = Station.objects.filter(code=station_to)[0]
 			if line_obj and station_from_obj and station_to_obj:
 				queryset = queryset.filter(line=line_obj, station_from=station_from_obj, station_to=station_to_obj, day=int(day))
 		return queryset
