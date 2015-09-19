@@ -8,9 +8,10 @@ export default class RideTable extends React.Component {
     return data.map(function(item, i){
       return(
         <Row key={i}>
-          <Col xs={4}>{item.time_start}</Col>
-          <Col xs={4}>{item.time_end}</Col>
-          <Col xs={4}><span className="trainNumber">{item.train_num}</span></Col>
+          <Col xs={4}>{item.time_start.toLowerCase()}</Col>
+          <Col xs={4}>{item.time_end.toLowerCase()}</Col>
+          <Col xs={2}><span className="smallerText">{item.train_num}</span></Col>
+          <Col xs={2}><span className="smallerText">{item.allow_bikes ? 'Yes' : null}</span></Col>
         </Row>
         );
     });
@@ -24,7 +25,8 @@ export default class RideTable extends React.Component {
         <Row>
           <Col xs={4}>Departure</Col>
           <Col xs={4}>Arrival</Col>
-          <Col xs={4}>Train</Col>
+          <Col xs={2}>Train</Col>
+          <Col xs={2}>Bike</Col>
         </Row>
         {rideRender}
       </div>

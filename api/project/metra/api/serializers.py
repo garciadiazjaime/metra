@@ -14,6 +14,7 @@ class StationSerializer(serializers.HyperlinkedModelSerializer):
 		fields = ('id', 'code', 'name', 'latitud', 'longitude', 'zone', 'url', 'line')
 
 class RideSerializer(serializers.HyperlinkedModelSerializer):
+
 	class Meta:
 		model = Ride
-		fields = ('id', 'line', 'station_from', 'station_to', 'time_start', 'time_end', 'trip', 'train_num', 'day')
+		fields = ('id', 'line', 'station_from', 'station_to', 'time_start', 'time_end', 'trip', 'train_num', 'day', 'allow_bikes')

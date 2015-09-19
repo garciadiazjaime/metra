@@ -1,9 +1,9 @@
-MINT
+METRA RAIL PROJECT
 ==============
+Offers line and route information.
 
 
 Metra API
-Installation Steps
 ------
 
 * [Create a virtual environment](http://desarrolloweblibre.com/por-que-usar-virtualenv/) and activate it (`$ . bin/activate` or `$ source bin/activate`)
@@ -20,38 +20,32 @@ Installation Steps
 * Run server (`$ python manage.py runserver`)
 * Go to **/admin** you should be able to log with the user and password
 
-### NOTES:
+NOTES
+
 * In case of using Osx you might need to install Xcode
 * In case you want to use 'graph_models' from 'django-extensions' you need to install: http://www.graphviz.org/
 
 
 Metra Website
-
-Metra rail’s app
-==============
-Offers line and route information.
-
-
-Installation Steps:
 ------
 
-- Clone project
-- Checkout dev branch
-- Create your branch (topics/feature)
-- Run `npm install`
-- Run `bower install`
-- Run `npm run dev`
-- Run `gulp watch` (another tab)
-- Run `compass watch` (another tab)
+* Clone project
+* Checkout dev branch
+* Create your branch (topics/feature)
+* Run `npm install`
+* Run `bower install`
+* Run `npm run dev`
+* Run `gulp watch` (another tab)
+* Run `compass watch` (another tab)
 
-NOTES:
-------
+NOTES
 
-- HTML and JS editable files are in "src" folder
-- SASS files are in "compass_components"
+* HTML and JS editable files are in "src" folder
+* SASS files are in "compass_components"
 
 
 CELERY
+------
 
 * After installing requirements run next command to start queue
 `./manage.py celery -A metra.tasks worker -l info`
