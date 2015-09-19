@@ -7,11 +7,11 @@ export default {
   },
 
   getStationsFromLine(line) {
-  	return axios.get(apiURL + 'stations?line=' + line);
+  	return axios.get(apiURL + 'stations/?line=' + line);
   },
 
-  getSchedule() {
-  	return axios.get(apiURL + 'rides?line=UP-N&station_from=KENOSHA&station_to=WINTHROP&day=1');
+  getSchedule(line, station_from, station_to, day) {
+  	return axios.get(apiURL + 'rides/?line=' + line + '&station_from=' + station_from + '&station_to=' + station_to + '&day=' + day);
   }
 
 };

@@ -126,7 +126,7 @@ AppDispatcher.register(function(action){
 
     // ---- SCHEDULE
     case LineConstants.REQUEST_SCHEDULE:
-      MetraAPI.getSchedule()
+      MetraAPI.getSchedule(action.line, action.station_from, action.station_to, action.day)
         .then(function (response) {
           // cacheRides(action.line, response.data);
           setRide(response.data);

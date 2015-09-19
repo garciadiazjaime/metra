@@ -24,7 +24,7 @@ export default class SchedulePanel extends React.Component {
 
   componentDidMount() {
     LineStore.addChangeListener(this._onChange);
-    LineActions.requestSchedule();
+    LineActions.requestSchedule(this.props.params.line, this.props.params.stationFrom, this.props.params.stationTo, 1);
   }
 
   componentWillUnmount() {
