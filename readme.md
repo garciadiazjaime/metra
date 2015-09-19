@@ -1,8 +1,8 @@
-MINT API
+MINT
 ==============
-Central API
 
 
+Metra API
 Installation Steps
 ------
 
@@ -25,9 +25,7 @@ Installation Steps
 * In case you want to use 'graph_models' from 'django-extensions' you need to install: http://www.graphviz.org/
 
 
-
-
-FE
+Metra Website
 
 Metra rail’s app
 ==============
@@ -49,6 +47,12 @@ Installation Steps:
 NOTES:
 ------
 
-- HTML and JS editable files are in "src" folder;
-- SASS files are in "compass_components";
+- HTML and JS editable files are in "src" folder
+- SASS files are in "compass_components"
+
+
+CELERY
+
+* After installing requirements run next command to start queue
+`./manage.py celery -A metra.tasks worker -l info`
 

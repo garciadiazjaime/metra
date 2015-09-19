@@ -58,7 +58,7 @@ class RideManager(models.Manager):
 						'trip': data[key]['trip_id'],
 						'train_num': data[key]['train_num']
 					}
-					print ride_info
+					print "Ride: [%s] %s: %s-%s ...saved" % (day, line.code, station_from.code, station_to.code)
 					self.create(line=line, station_from=station_from, station_to=station_to, day=day, time_start=ride_info['time_start'], time_end=ride_info['time_end'], trip=ride_info['trip'], train_num=ride_info['train_num'])
 		else:
 			print "[%s] %s: %s-%s  has been already saved" % (day, line.code, station_from.code, station_to.code)
