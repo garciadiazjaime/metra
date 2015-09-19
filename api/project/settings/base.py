@@ -116,7 +116,8 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    ],
+    'TIME_FORMAT': '%I:%M%p'
 }
 
 CORS_ORIGIN_ALLOW_ALL = True

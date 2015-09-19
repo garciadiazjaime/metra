@@ -43,6 +43,10 @@ let LineStore = assign({}, EventEmitter.prototype, {
     return _data.ride;
   },
 
+  resetRide() {
+    _data.ride = [];
+  },
+
   setStation(ref, value) {
     _data[ref] = value;
   },

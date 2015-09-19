@@ -41,6 +41,7 @@ class Ride(models.Model):
 	trip = models.CharField(max_length=140)
 	train_num = models.CharField(max_length=140, null=True, blank=True)
 	day = models.IntegerField(null=True, blank=True)
+	allow_bikes = models.BooleanField(default=False)
 
 	objects = RideManager()
 
