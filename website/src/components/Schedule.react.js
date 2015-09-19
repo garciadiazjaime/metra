@@ -28,6 +28,7 @@ export default class SchedulePanel extends React.Component {
   }
 
   componentWillUnmount() {
+    LineStore.resetRide();
     LineStore.removeChangeListener(this._onChange);
   }
 
