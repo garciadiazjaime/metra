@@ -15,7 +15,8 @@ const _data = {
   stations: [],
   ride: [],
   stationFrom: null,
-  stationTo: null
+  stationTo: null,
+  day: new Date().getDay()
 };
 
 let LineStore = assign({}, EventEmitter.prototype, {
@@ -35,7 +36,8 @@ let LineStore = assign({}, EventEmitter.prototype, {
   getSelectedStations() {
     return {
       stationFrom: _data.stationFrom,
-      stationTo: _data.stationTo
+      stationTo: _data.stationTo,
+      day: _data.day
     };
   },
 
@@ -49,6 +51,10 @@ let LineStore = assign({}, EventEmitter.prototype, {
 
   setStation(ref, value) {
     _data[ref] = value;
+  },
+
+  setDay(value) {
+    _data.day = value;
   },
 
   emitChange() {

@@ -3,6 +3,7 @@ import {Button} from 'react-bootstrap';
 
 import SelectStation from './widgets/SelectStation.react';
 import SelectLine from './widgets/SelectLine.react';
+import SelectDay from './widgets/SelectDay.react'
 import LineActions from '../actions/LineActions';
 import LineStore from '../stores/LineStore';
 
@@ -13,7 +14,8 @@ function getLineState() {
     stations: LineStore.getStations(),
     selectedLine: LineStore.getSelectedLine(),
     stationFrom: LineStore.getSelectedStations().stationFrom,
-    stationTo: LineStore.getSelectedStations().stationTo
+    stationTo: LineStore.getSelectedStations().stationTo,
+    day: LineStore.getSelectedStations().day,
   };
 }
 
@@ -39,21 +41,21 @@ export default class Home extends React.Component {
     return (
       <div>
         <p>Welcome to Easy Metra Chicago, where you can consult departure and arrival hours of Metra&#39;s rail service. </p>
-        <p>Please enter the following information.</p>
         <label>Train line</label>
         <div className="selectWrap">
           <SelectLine data={this.state.lines} name="line" handleChange={this._onLineChange} selectedLine={this.state.selectedLine}/>
         </div>
-        <div className="stationRow">
-          <label>Departing station</label>
-          <div className="selectWrap">
-            <SelectStation data={this.state.stations} handleChange={this._onStationChange.bind(this, 'stationFrom')} selectedStation={this.state.stationFrom} />
-          </div>
-        </div><div className="stationRow">
-          <label>Destination station</label>
-          <div className="selectWrap">
-            <SelectStation data={this.state.stations} handleChange={this._onStationChange.bind(this, 'stationTo')} selectedStation={this.state.stationTo} />
-          </div>
+        <label>Departing station</label>
+        <div className="selectWrap">
+          <SelectStation data={this.state.stations} handleChange={this._onStationChange.bind(this, 'stationFrom')} selectedStation={this.state.stationFrom} />
+        </div>
+        <label>Destination station</label>
+        <div className="selectWrap">
+          <SelectStation data={this.state.stations} handleChange={this._onStationChange.bind(this, 'stationTo')} selectedStation={this.state.stationTo} />
+        </div>
+        <label>Day</label>
+        <div className="selectWrap">
+          <SelectDay handleChange={this._onDayChange.bind(this)} selectedDay={this.state.day}/>
         </div>
         <Button onClick={this.handleClick}><span className="rightButtonDecoration">View Schedule</span></Button>
       </div>
@@ -62,7 +64,7 @@ export default class Home extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
-    const selectedRide = this._getRideCodes(this.state.lines, this.state.stations, this.state.selectedLine, this.state.stationFrom, this.state.stationTo);
+    const selectedRide = this._getRideCodes(this.state.lines, this.state.stations, this.state.selectedLine, this.state.stationFrom, this.state.stationTo, this.state.day);
     this.context.router.transitionTo('schedule', selectedRide);
   }
 
@@ -75,8 +77,14 @@ export default class Home extends React.Component {
     this._onChange();
   }
 
-  _getRideCodes(lines, stations, selectedLine, userStationFrom, userStationTo){
+  _onDayChange(e) {
+    LineStore.setDay(parseInt(e.target.value));
+    this._onChange();
+  }
 
+  _getRideCodes(lines, stations, selectedLine, userStationFrom, userStationTo, day){
+
+    const dayName = ['', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const line = lines.filter(function(line){
       return line.id == selectedLine;
     });
@@ -98,7 +106,8 @@ export default class Home extends React.Component {
     return {
       line: line[0].code,
       stationFrom: stationFrom,
-      stationTo: stationTo
+      stationTo: stationTo,
+      day: dayName[day].toLowerCase()
     };
   }
 

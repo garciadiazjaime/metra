@@ -11,7 +11,7 @@ export default class RideTable extends React.Component {
           <Col xs={4}>{item.time_start.toLowerCase()}</Col>
           <Col xs={4}>{item.time_end.toLowerCase()}</Col>
           <Col xs={2}><span className="smallerText">{item.train_num}</span></Col>
-          <Col xs={2}><span className="smallerText">{item.allow_bikes ? 'Yes' : null}</span></Col>
+          <Col xs={2}><span className="smallerText">{item.allow_bikes ? 'Y' : null}</span></Col>
         </Row>
         );
     });

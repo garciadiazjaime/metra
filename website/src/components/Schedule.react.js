@@ -23,8 +23,9 @@ export default class SchedulePanel extends React.Component {
   }
 
   componentDidMount() {
+    const dayName = ['', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
     LineStore.addChangeListener(this._onChange);
-    LineActions.requestSchedule(this.props.params.line, this.props.params.stationFrom, this.props.params.stationTo, 1);
+    LineActions.requestSchedule(this.props.params.line, this.props.params.stationFrom, this.props.params.stationTo, dayName.indexOf(this.props.params.day));
   }
 
   componentWillUnmount() {

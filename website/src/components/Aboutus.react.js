@@ -10,7 +10,6 @@ export default class AboutUs extends React.Component {
   }
 
   handleClick(e){
-    console.log('handleClick');
     e.preventDefault();
     this.context.router.transitionTo('home');
   }
