@@ -24,6 +24,8 @@ function getHTML(data) {
   return '<!doctype html>' +
     '<html>' +
     '<head>' +
+    '<title>Metra Chicago Departure and Arrival hours</title>' +  
+    '<meta name="description" content="Easy Metra Chicago, where you can consult departure and arrival hours of Metra\'s rail service.">' +  
     '<link href="/vendor.css" rel="stylesheet" />' +
     '<link href="/screen.css" rel="stylesheet" />' +
     '<link rel="icon" type="image/png" href="/img/favicon.ico">' +

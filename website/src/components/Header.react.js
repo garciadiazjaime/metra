@@ -10,7 +10,7 @@ export default class Header extends React.Component {
 				<h1 id="brand">
 					<a onClick={this.handleClick.bind(this, 'home')} title="Return to home">
 						<em>Branding</em>
-						<span className="hidden">Train schedules in Chicago</span>
+						<span className="hidden">Metra Train schedules in Chicago</span>
 					</a>
 				</h1>
 				<Button id="infoButton" onClick={this.handleClick.bind(this, 'aboutus')}>i</Button>

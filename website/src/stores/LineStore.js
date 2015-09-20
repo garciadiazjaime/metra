@@ -105,8 +105,9 @@ AppDispatcher.register(function(action){
           .then(function (response) {
             setLines(response.data);
             LineStore.emitChange();
-            LineActions.requestSations(response.data[0].id);
-            setSelectedLine(response.data[0].id);
+            const lineID = action.line ? action.line : response.data[0].id;
+            LineActions.requestSations(lineID);
+            setSelectedLine(lineID);
           })
           .catch(function (response) {
             console.log(response);
@@ -138,9 +139,15 @@ AppDispatcher.register(function(action){
     case LineConstants.REQUEST_SCHEDULE:
       MetraAPI.getSchedule(action.line, action.station_from, action.station_to, action.day)
         .then(function (response) {
+
           // cacheRides(action.line, response.data);
           setRide(response.data);
           LineStore.emitChange();
+
+          const bits = response.data[0].line.split('/');
+          const lineID = bits[ bits.length - 2 ];
+          LineActions.requestLines(lineID);
+
         })
         .catch(function (response) {
           console.log(response);

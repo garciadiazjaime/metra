@@ -9,6 +9,9 @@ from .tasks import task_request_schedule
 class ScheduleHandler:
 
   def init_tasks(self, line, day):
+    '''
+      Function executed by the view and in charge of start celery tasks
+    '''
     dates = self.get_days_to_update(day)
     lines = Line.objects.filter(code=line) if line else Line.objects.all()
     
@@ -36,13 +39,19 @@ class ScheduleHandler:
       # break # dates
 
   def get_days_to_update(self, day):
-    d = datetime.datetime.today()
-    next_monday = self.next_weekday(d, 0)
+    '''
+      Returns an array with one value if day is received or an array with the whole week in it. Takes next monday as the index 0
+    '''
+    today = datetime.datetime.today()
+    next_monday = self.next_weekday(today, 0)
     return [ next_monday + datetime.timedelta(days=int(day)-1) ] if day else [ next_monday + datetime.timedelta(days=i) for i in range(0, 7) ]
 
-  def next_weekday(self, d, weekday):
+  def next_weekday(self, date, weekday):
+    '''
+      Function to get next monday based on a date
+    '''
     # 0 = Monday, 1=Tuesday, 2=Wednesday...
-    days_ahead = weekday - d.weekday()
+    days_ahead = weekday - date.weekday()
     if days_ahead <= 0: # Target day already happened this week
         days_ahead += 7
-    return d + datetime.timedelta(days_ahead)
+    return date + datetime.timedelta(days_ahead)
