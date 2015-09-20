@@ -201,7 +201,8 @@ AppDispatcher.register(function(action){
       }
       else if(cacheRideKey){
         setRide(_data.cacheRides[cacheRideKey]);
-        setSelectedStations(action.station_from, action.station_to)
+        // use values from cache (ids) instead of params (code)
+        setSelectedStations(_data.cacheRides[cacheRideKey][0].station_from, _data.cacheRides[cacheRideKey][0].station_to)
         LineStore.emitChange();
       }
       
