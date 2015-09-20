@@ -10,16 +10,26 @@ class ScheduleHandler:
 
   def init_tasks(self, line, day):
     dates = self.get_days_to_update(day)
+    lines = Line.objects.filter(code=line) if line else Line.objects.all()
+    
     for date in dates:
-      lines = Line.objects.filter(code=line) if line else Line.objects.all()
       for line in lines:
         stations = Station.objects.filter(line=line)
         for i in range(0, stations.count() -1 ):
           for j in range(i+1, stations.count()):
+            # Inbound
             if Ride.objects.filter(line=line, station_from=stations[i], station_to=stations[j], day=date.weekday() + 1).count() == 0:
+              print "Ride: [%s] %s: %s-%s ... init_tasks" % (date.weekday() + 1, line.code, stations[i], stations[j])
               task_request_schedule.delay(line, stations[i], stations[j], date)
             else:
               print "Ride: [%s] %s: %s-%s ... already saved" % (date.weekday() + 1, line.code, stations[i], stations[j])
+
+            # Outbound
+            if Ride.objects.filter(line=line, station_from=stations[j], station_to=stations[i], day=date.weekday() + 1).count() == 0:
+              print "Ride: [%s] %s: %s-%s ... init_tasks" % (date.weekday() + 1, line.code, stations[j], stations[i])
+              task_request_schedule.delay(line, stations[j], stations[i], date)
+            else:
+              print "Ride: [%s] %s: %s-%s ... already saved" % (date.weekday() + 1, line.code, stations[j], stations[i])
             # break # trip
           # break # stations
         # break # lines

@@ -16,7 +16,7 @@ const _data = {
   ride: [],
   stationFrom: null,
   stationTo: null,
-  day: new Date().getDay()
+  day: new Date().getDay() || 7
 };
 
 let LineStore = assign({}, EventEmitter.prototype, {

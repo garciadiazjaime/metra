@@ -53,22 +53,25 @@ class RideManager(models.Manager):
 		if self.filter(line=line, station_from=station_from, station_to=station_to, day=day).count() == 0:
 			for key in data:
 				if 'train' in key:
-					rides.append({
-						'line': line,
-						'station_from': station_from,
-						'station_to': station_to,
-						'day': day,
-						'time_start': datetime.datetime.strptime(data[key]['scheduled_dpt_time'] + ' ' + data[key]['schDepartInTheAM'], '%I:%M %p'),
-						'time_end': datetime.datetime.strptime(data[key]['scheduled_arv_time'] + ' ' + data[key]['schArriveInTheAM'], '%I:%M %p'),
-						'trip': data[key]['trip_id'],
-						'train_num': data[key]['train_num'],
-						'allow_bikes': True if data[key]['bikesText'].lower() == 'yes' else False
-					})
+					if 'status' in data[key] and data[key]['status'] == 0:
+						print "Ride: [%s] %s: %s-%s ... with not data" % (day, line.code, station_from.code, station_to.code)
+					else:
+						rides.append({
+							'line': line,
+							'station_from': station_from,
+							'station_to': station_to,
+							'day': day,
+							'time_start': datetime.datetime.strptime(data[key]['scheduled_dpt_time'] + ' ' + data[key]['schDepartInTheAM'], '%I:%M %p'),
+							'time_end': datetime.datetime.strptime(data[key]['scheduled_arv_time'] + ' ' + data[key]['schArriveInTheAM'], '%I:%M %p'),
+							'trip': data[key]['trip_id'],
+							'train_num': data[key]['train_num'],
+							'allow_bikes': True if data[key]['bikesText'].lower() == 'yes' else False
+						})
 
 			if len(rides):
-					for ride in sorted(rides, key=lambda ride: ride['train_num']):
-						self.create(line=ride['line'], station_from=ride['station_from'], station_to=ride['station_to'], day=ride['day'], time_start=ride['time_start'], time_end=ride['time_end'], trip=ride['trip'], train_num=ride['train_num'], allow_bikes=ride['allow_bikes'])
-						print "Ride: [%s] %s: %s-%s at %s...saved" % (day, line.code, station_from.code, station_to.code, ride['time_start'])
+				for ride in sorted(rides, key=lambda ride: ride['train_num']):
+					self.create(line=ride['line'], station_from=ride['station_from'], station_to=ride['station_to'], day=ride['day'], time_start=ride['time_start'], time_end=ride['time_end'], trip=ride['trip'], train_num=ride['train_num'], allow_bikes=ride['allow_bikes'])
+					print "Ride: [%s] %s: %s-%s at %s...saved" % (day, line.code, station_from.code, station_to.code, ride['time_start'])
 		else:
 			print "[%s] %s: %s-%s  already saved" % (day, line.code, station_from.code, station_to.code)
 		return True
