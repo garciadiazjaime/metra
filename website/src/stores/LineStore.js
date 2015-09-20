@@ -78,7 +78,7 @@ function setLines(lines) {
 }
 
 function areLinesEmpty() {
-  return _data.lines.length ? true : false;
+  return _data.lines.length ? false : true;
 }
 
 function setSelectedLine(line) {
