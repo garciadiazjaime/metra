@@ -10,13 +10,15 @@ const CHANGE_EVENT = 'change';
 
 const _data = {
   cacheStations: {},
+  cacheRides: {},
   selectedLine: null,
   lines: [],
   stations: [],
   ride: [],
   stationFrom: null,
   stationTo: null,
-  day: new Date().getDay() || 7
+  day: new Date().getDay() || 7,
+  loadFromScheduleView: false
 };
 
 let LineStore = assign({}, EventEmitter.prototype, {
@@ -71,28 +73,59 @@ let LineStore = assign({}, EventEmitter.prototype, {
 });
 
 
-function setLines(lines){
+function setLines(lines) {
   _data.lines = lines;
 }
 
-function setSelectedLine(line){
+function areLinesEmpty() {
+  return _data.lines.length ? true : false;
+}
+
+function setSelectedLine(line) {
   _data.selectedLine = line;
 }
 
-function cacheStations(line, stations) {
+function setCacheStations(line, stations) {
   if(!_data.cacheStations[line]){
     _data.cacheStations[line] = stations;
   }
 }
 
+function setCacheRides(key, ride) {
+  if(key && ride && ride.length){
+    if(!_data.cacheRides[key]){
+      _data.cacheRides[key] = ride;
+    }
+  }
+}
+
+function getRideKey(ride) {
+  return ride.day && ride.line && ride.station_from && ride.station_to ? ride.day + '-' + ride.line + '-' + ride.station_from + '-' + ride.station_to : false;
+}
+
 function setStations(stations) {
   _data.stations = stations ? stations : [];
-  _data['stationFrom'] = stations ? stations[0].id : null;
-  _data['stationTo'] = stations ? stations[ stations.length - 1 ].id : null;
+  // if the page is not loaded from /schedule we set by default stations from and to
+  if(!_data.loadFromScheduleView){
+    if(stations && stations.length){
+      setSelectedStations(stations[0].id, stations[ stations.length - 1 ].id);  
+    }
+  }else{
+    loadFromScheduleView = false;
+  }
+}
+
+function setSelectedStations(stationFrom, stationTo){
+  _data['stationFrom'] = stationFrom ? stationFrom : null;
+  _data['stationTo'] = stationTo ? stationTo : null;
 }
 
 function setRide(ride) {
   _data.ride = ride;
+}
+
+function loadFromScheduleView(value){
+  _data.loadFromScheduleView = value;
 }
 
 AppDispatcher.register(function(action){
@@ -106,8 +139,8 @@ AppDispatcher.register(function(action){
             setLines(response.data);
             LineStore.emitChange();
             const lineID = action.line ? action.line : response.data[0].id;
+            // now that we have line data we query stations for this line
             LineActions.requestSations(lineID);
-            setSelectedLine(lineID);
           })
           .catch(function (response) {
             console.log(response);
@@ -118,10 +151,12 @@ AppDispatcher.register(function(action){
     // ---- STATIONS
     case LineConstants.REQUEST_STATIONS:
       setSelectedLine(action.line);
+      // if stations have been searched before they should be on the "proxy"
       if(action.line && !_data.cacheStations[action.line]){
         MetraAPI.getStationsFromLine(action.line)
           .then(function (response) {
-            cacheStations(action.line, response.data);
+            // set "proxy" to avoid extra calls to api
+            setCacheStations(action.line, response.data);
             setStations(response.data);
             LineStore.emitChange();
           })
@@ -137,21 +172,39 @@ AppDispatcher.register(function(action){
 
     // ---- SCHEDULE
     case LineConstants.REQUEST_SCHEDULE:
-      MetraAPI.getSchedule(action.line, action.station_from, action.station_to, action.day)
-        .then(function (response) {
+      const cacheRideKey = getRideKey({
+        day: action.day,
+        line: action.line,
+        station_from: action.station_from,
+        station_to: action.station_to
+      });
+      if(cacheRideKey && !_data.cacheRides[cacheRideKey]){
+        MetraAPI.getSchedule(action.line, action.station_from, action.station_to, action.day)
+          .then(function (response) {
 
-          // cacheRides(action.line, response.data);
-          setRide(response.data);
-          LineStore.emitChange();
+            setCacheRides(cacheRideKey, response.data);
+            setRide(response.data);
+            setSelectedStations(response.data[0].station_from, response.data[0].station_to)
+            LineStore.emitChange();
 
-          const bits = response.data[0].line.split('/');
-          const lineID = bits[ bits.length - 2 ];
-          LineActions.requestLines(lineID);
+            // assure we only request lines->stations when user arrives site throught /schedule
+            if(areLinesEmpty()){
+              // set flag that helps to dont overwrite stations from/to on action
+              loadFromScheduleView(true);
+              LineActions.requestLines(response.data[0].line);
+            }
 
-        })
-        .catch(function (response) {
-          console.log(response);
-        });
+          })
+          .catch(function (response) {
+            console.log(response);
+          });  
+      }
+      else if(cacheRideKey){
+        setRide(_data.cacheRides[cacheRideKey]);
+        setSelectedStations(action.station_from, action.station_to)
+        LineStore.emitChange();
+      }
+      
     break;
 
     default:
