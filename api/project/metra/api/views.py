@@ -34,8 +34,8 @@ class RidesViewSet(viewsets.ModelViewSet):
 		# validate all 4 params are presented
 		if line and station_from and station_to and day:
 			line_obj = Line.objects.get(code=line)
-			station_from_obj = Station.objects.filter(code=station_from)[0]
-			station_to_obj = Station.objects.filter(code=station_to)[0]
+			station_from_obj = Station.objects.filter(line=line_obj, code=station_from)[0]
+			station_to_obj = Station.objects.filter(line=line_obj, code=station_to)[0]
 			# in case we got valid param we query the db
 			if line_obj and station_from_obj and station_to_obj:
 				queryset = Ride.objects.filter(line=line_obj, station_from=station_from_obj, station_to=station_to_obj, day=int(day))

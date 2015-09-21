@@ -184,7 +184,7 @@ AppDispatcher.register(function(action){
 
             setCacheRides(cacheRideKey, response.data);
             setRide(response.data);
-            setSelectedStations(response.data[0].station_from, response.data[0].station_to)
+            setSelectedStations(response.data[0].station_from, response.data[0].station_to);
             LineStore.emitChange();
 
             // assure we only request lines->stations when user arrives site throught /schedule
