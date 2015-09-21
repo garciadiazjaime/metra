@@ -11,7 +11,7 @@ class StationAdmin(admin.ModelAdmin):
 
 class RideAdmin(admin.ModelAdmin):
 	list_display = ('line', 'station_from', 'station_to', 'time_start', 'time_end', 'trip', 'train_num', 'day')
-	list_filter = ('line', 'station_from', 'station_to', 'trip', 'train_num', 'day')
+	list_filter = ('line', 'day', 'station_from')
 
 admin.site.register(Line, LineAdmin)
 admin.site.register(Zone)

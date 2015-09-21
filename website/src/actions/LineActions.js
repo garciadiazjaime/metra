@@ -5,9 +5,10 @@ import LineConstants from '../constants/LineConstants';
 export default {
 
   // ---- LINES
-  requestLines() {
+  requestLines(line) {
     AppDispatcher.dispatch({
-      actionType: LineConstants.REQUEST_LINES
+      actionType: LineConstants.REQUEST_LINES,
+      line: line
     });
   },
 

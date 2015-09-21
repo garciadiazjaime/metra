@@ -13,7 +13,7 @@ class StationSerializer(serializers.HyperlinkedModelSerializer):
 		model = Station
 		fields = ('id', 'code', 'name', 'latitud', 'longitude', 'zone', 'url', 'line')
 
-class RideSerializer(serializers.HyperlinkedModelSerializer):
+class RideSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Ride
