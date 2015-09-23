@@ -2,6 +2,7 @@ METRA RAIL PROJECT
 ==============
 Offers line and route information.
 
+[![Build Status](https://travis-ci.org/garciadiazjaime/metra.svg)](https://travis-ci.org/garciadiazjaime/metra)
 
 Metra API
 ------
