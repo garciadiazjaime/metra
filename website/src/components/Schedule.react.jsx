@@ -37,7 +37,7 @@ export default class SchedulePanel extends React.Component {
 
     return (
       <div>
-        <h2 id="scheduleTitle">Union Pacific/ North line’s schedule <span className="small">From Zion to Kenosha</span></h2>
+        <h2 id="scheduleTitle">Union Pacific/ North line&#44;s schedule <span className="small">From Zion to Kenosha</span></h2>
   
         <RideTableWidget data={this.state.ride} id="scheduleTable" />
 

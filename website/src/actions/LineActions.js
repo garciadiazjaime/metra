@@ -17,7 +17,7 @@ export default {
     AppDispatcher.dispatch({
       actionType: LineConstants.REQUEST_STATIONS,
       line: line
-    })
+    });
   },
 
   // ---- SCHEDULE
@@ -28,7 +28,7 @@ export default {
       station_from: station_from,
       station_to: station_to,
       day: day
-    })
+    });
   }
 
 };

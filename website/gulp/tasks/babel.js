@@ -8,7 +8,7 @@ var changed = require('gulp-changed');
 var react = require('gulp-react');
 
 function babelTask(){
-  return gulp.src('src/**/*.js')
+  return gulp.src('src/**/*.js*')
     // .pipe(changed('build/'))
     .pipe(babel())
       .on('error', function(err){

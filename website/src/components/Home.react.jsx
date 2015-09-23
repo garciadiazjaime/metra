@@ -3,7 +3,7 @@ import {Button} from 'react-bootstrap';
 
 import SelectStation from './widgets/SelectStation.react';
 import SelectLine from './widgets/SelectLine.react';
-import SelectDay from './widgets/SelectDay.react'
+import SelectDay from './widgets/SelectDay.react';
 import LineActions from '../actions/LineActions';
 import LineStore from '../stores/LineStore';
 
@@ -24,7 +24,7 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
-    this._onChange = this._onChange.bind(this)
+    this._onChange = this._onChange.bind(this);
     this.state = getLineState();
   }
 
