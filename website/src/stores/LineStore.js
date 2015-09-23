@@ -116,8 +116,8 @@ function setStations(stations) {
 }
 
 function setSelectedStations(stationFrom, stationTo){
-  _data['stationFrom'] = stationFrom ? stationFrom : null;
-  _data['stationTo'] = stationTo ? stationTo : null;
+  _data.stationFrom = stationFrom ? stationFrom : null;
+  _data.stationTo = stationTo ? stationTo : null;
 }
 
 function setRide(ride) {
@@ -202,7 +202,7 @@ AppDispatcher.register(function(action){
       else if(cacheRideKey){
         setRide(_data.cacheRides[cacheRideKey]);
         // use values from cache (ids) instead of params (code)
-        setSelectedStations(_data.cacheRides[cacheRideKey][0].station_from, _data.cacheRides[cacheRideKey][0].station_to)
+        setSelectedStations(_data.cacheRides[cacheRideKey][0].station_from, _data.cacheRides[cacheRideKey][0].station_to);
         LineStore.emitChange();
       }
       

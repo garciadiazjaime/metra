@@ -4,7 +4,7 @@ var runSequence = require('run-sequence');
 
 
 function watchTask(){
-	return gulp.watch('src/**/*.js', ['compile']);
+	return gulp.watch('src/**/*.js*', ['compile']);
 }
 
 gulp.task('watch', ['build'], watchTask);
