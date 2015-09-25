@@ -47,6 +47,30 @@ let LineStore = assign({}, EventEmitter.prototype, {
     return _data.ride;
   },
 
+  getLabels() {
+    let i, len, response = {line: null, stationFrom: null, stationTo: null};
+    for(i=0, len=_data.lines.length; i<len; i++) {
+      if(_data.lines[i].id === parseInt(_data.selectedLine)) {
+        response.line = _data.lines[i].name
+        break;
+      }
+    }
+
+    for(i=0, len=_data.stations.length; i<len; i++) {
+      if(!response.stationFrom && _data.stations[i].id === _data.stationFrom) {
+        response.stationFrom = _data.stations[i].name;
+      }
+      if(!response.stationTo && _data.stations[i].id  === _data.stationTo) {
+        response.stationTo = _data.stations[i].name;
+      }
+      if(response.stationFrom && response.stationTo) {
+        break;
+      }
+    }
+
+    return response;
+  },
+
   resetRide() {
     _data.ride = [];
   },
