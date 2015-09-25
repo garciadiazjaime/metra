@@ -141,7 +141,7 @@ function setStations(stations) {
 
 function setSelectedStations(stationFrom, stationTo){
   _data.stationFrom = stationFrom ? stationFrom : null;
-  _data.stationTo = stationTo ? stationTo : null;  
+  _data.stationTo = stationTo ? stationTo : null;
 }
 
 function setRide(ride) {
