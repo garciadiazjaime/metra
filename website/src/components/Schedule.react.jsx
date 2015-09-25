@@ -8,7 +8,8 @@ import LineStore from '../stores/LineStore';
 
 function getRideState() {
   return {
-    ride: LineStore.getRide()
+    ride: LineStore.getRide(),
+    labels: LineStore.getLabels()
   };
 }
 
@@ -37,7 +38,7 @@ export default class SchedulePanel extends React.Component {
 
     return (
       <div>
-        <h2 id="scheduleTitle">Union Pacific/ North line&#44;s schedule <span className="small">From Zion to Kenosha</span></h2>
+        <h2 id="scheduleTitle">{this.state.labels.line}&#39;s Schedule <span className="small">From {this.state.labels.stationFrom} to {this.state.labels.stationTo}</span></h2>
   
         <RideTableWidget data={this.state.ride} id="scheduleTable" />
 
