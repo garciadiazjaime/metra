@@ -141,16 +141,7 @@ function setStations(stations) {
 
 function setSelectedStations(stationFrom, stationTo){
   _data.stationFrom = stationFrom ? stationFrom : null;
-  _data.stationTo = stationTo ? stationTo : null;
-
-  let i, len;
-  for(i=0, len=_data.lines; i<_data.lines.length; i++) {
-    if(_data.lines[i].id === _data.selectedLine) {
-      _data.lineLabel = _data.lines[i].name;
-      break;
-    }
-  }
-  
+  _data.stationTo = stationTo ? stationTo : null;  
 }
 
 function setRide(ride) {
