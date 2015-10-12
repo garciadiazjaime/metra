@@ -1,11 +1,11 @@
 import React from 'react';
 import {Button} from 'react-bootstrap';
 
-import SelectStation from './widgets/SelectStation.react';
-import SelectLine from './widgets/SelectLine.react';
-import SelectDay from './widgets/SelectDay.react';
-import LineActions from '../actions/LineActions';
-import LineStore from '../stores/LineStore';
+import SelectStation from './widgets/SelectStation.react.jsx';
+import SelectLine from './widgets/SelectLine.react.jsx';
+import SelectDay from './widgets/SelectDay.react.jsx';
+import LineActions from '../actions/LineActions.js';
+import LineStore from '../stores/LineStore.js';
 
 
 function getLineState() {
