@@ -1,6 +1,7 @@
 *.DS_Store
 *.pyc
 .sass-cache/
+api/static/
 bower_components/
 node_modules/
 npm-debug.log
