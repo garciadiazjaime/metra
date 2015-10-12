@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button} from 'react-bootstrap';
 
-import RideTableWidget from './widgets/RideTable.react';
+import RideTableWidget from './widgets/RideTable.react.jsx';
 import LineActions from '../actions/LineActions';
 import LineStore from '../stores/LineStore';
 
