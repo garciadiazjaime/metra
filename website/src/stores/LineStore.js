@@ -51,7 +51,7 @@ let LineStore = assign({}, EventEmitter.prototype, {
     let i, len, response = {line: null, stationFrom: null, stationTo: null};
     for(i=0, len=_data.lines.length; i<len; i++) {
       if(_data.lines[i].id === parseInt(_data.selectedLine)) {
-        response.line = _data.lines[i].name
+        response.line = _data.lines[i].name;
         break;
       }
     }

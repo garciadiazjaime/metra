@@ -8,3 +8,4 @@ assets/static/
 website/build
 website/public/*.js
 website/public/*.css
+website/coverage
