@@ -29,14 +29,18 @@ NOTES
 
 Metra Website
 ------
-
+* Create virtualenv
+* Activate virtualenv
+* Run pip install nodeenv
+* Run nodeenv --node=0.12.7 -p
 * Clone project
 * Checkout dev branch
 * Create your branch (topics/feature)
 * Run `npm install`
 * Run `bower install`
-* Run `npm run dev`
-* Run `gulp watch` (another tab)
+* Run `gulp build`
+* Run `gulp watch`
+* Run `npm run dev` (another tab)
 * Run `compass watch` (another tab)
 
 NOTES
