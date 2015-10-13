@@ -39,7 +39,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "postinstall": "./node_modules/.bin/gulp build",
+    "postinstall": "gulp build",
     "dev": "nodemon server.js",
     "test": "npm run lint && npm run jest",
     "jest": "./node_modules/jest-cli/bin/jest.js",
