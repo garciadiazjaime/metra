@@ -7,10 +7,10 @@ export default class Footer extends React.Component {
     return (
       <div className="container">
         <p>
-          Powered by 
+          Powered by
           <a href="http://mintitmedia.com/" title="Mint IT Media - Design and web development" target="_blank">Mint</a>
         </p>
       </div>
     );
   }
-};
+}

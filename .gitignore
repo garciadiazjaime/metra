@@ -1,6 +1,7 @@
 *.DS_Store
 *.pyc
 .sass-cache/
+api/static/
 bower_components/
 node_modules/
 npm-debug.log
@@ -8,3 +9,4 @@ assets/static/
 website/build
 website/public/*.js
 website/public/*.css
+website/coverage

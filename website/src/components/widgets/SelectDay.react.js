@@ -2,13 +2,13 @@ import React from 'react';
 
 
 export default class SelectDay extends React.Component {
-  
+
   render() {
     const dayNumber = new Date().getDay();
     const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const optionsRender = [0, 1, 2, 3, 4, 5, 6].map(function(i){
+    const optionsRender = [0, 1, 2, 3, 4, 5, 6].map(function(index) {
       return (
-        <option value={(dayNumber + i) % 7 || 7} key={i}>{dayName[ (dayNumber + i) % 7 ]}</option>
+        <option value={(dayNumber + index) % 7 || 7} key={index}>{dayName[ (dayNumber + index) % 7 ]}</option>
       );
     });
     return (
@@ -17,4 +17,10 @@ export default class SelectDay extends React.Component {
       </select>
     );
   }
+}
+
+SelectDay.propTypes = {
+  handleChange: React.PropTypes.func,
+  selectedDay: React.PropTypes.string,
 };
+

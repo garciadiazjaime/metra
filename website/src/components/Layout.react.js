@@ -5,7 +5,7 @@ import HeaderSection from './Header.react';
 import FooterSection from './Footer.react';
 
 
-export default class Layout extends React.Component{
+export default class Layout extends React.Component {
 
   render() {
     return (
@@ -22,4 +22,4 @@ export default class Layout extends React.Component{
       </div>
     );
   }
-};
+}

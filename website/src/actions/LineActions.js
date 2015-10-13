@@ -8,7 +8,7 @@ export default {
   requestLines(line) {
     AppDispatcher.dispatch({
       actionType: LineConstants.REQUEST_LINES,
-      line: line
+      line: line,
     });
   },
 
@@ -16,19 +16,19 @@ export default {
   requestSations(line) {
     AppDispatcher.dispatch({
       actionType: LineConstants.REQUEST_STATIONS,
-      line: line
+      line: line,
     });
   },
 
   // ---- SCHEDULE
-  requestSchedule(line, station_from, station_to, day) {
+  requestSchedule(line, stationFrom, stationTo, day) {
     AppDispatcher.dispatch({
       actionType: LineConstants.REQUEST_SCHEDULE,
       line: line,
-      station_from: station_from,
-      station_to: station_to,
-      day: day
+      station_from: stationFrom,
+      station_to: stationTo,
+      day: day,
     });
-  }
+  },
 
 };

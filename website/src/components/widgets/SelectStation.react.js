@@ -2,11 +2,11 @@ import React from 'react';
 
 
 export default class SelectStation extends React.Component {
-  
+
   render() {
-    const optionsRender = this.props.data.map(function(item, i){
+    const optionsRender = this.props.data.map(function(item, index) {
       return (
-        <option value={item.id} key={i}>{item.name}</option>
+        <option value={item.id} key={index}>{item.name}</option>
       );
     });
 
@@ -16,4 +16,10 @@ export default class SelectStation extends React.Component {
       </select>
     );
   }
+}
+
+SelectStation.propTypes = {
+  data: React.PropTypes.array,
+  handleChange: React.PropTypes.func,
+  selectedStation: React.PropTypes.string,
 };
