@@ -1,8 +1,8 @@
 'use strict';
 
 var srcFolder = '../../src/components/';
-jest.dontMock(srcFolder + 'Header.react.jsx');
-jest.dontMock(srcFolder + 'Footer.react.jsx');
+jest.dontMock(srcFolder + 'Header.react');
+jest.dontMock(srcFolder + 'Footer.react');
 
 
 describe('Render Layout Component', function() {
@@ -10,7 +10,7 @@ describe('Render Layout Component', function() {
   var TestUtils = React.addons.TestUtils;
 
   describe('Render Header Component', function() {
-      var Header = require(srcFolder + 'Header.react.jsx');
+      var Header = require(srcFolder + 'Header.react');
       Header.contextTypes = {};
       var component = TestUtils.renderIntoDocument(<Header />);
 
@@ -26,7 +26,7 @@ describe('Render Layout Component', function() {
     });
 
   describe('Render Footer Component', function() {
-      var Footer = require(srcFolder + 'Footer.react.jsx');
+      var Footer = require(srcFolder + 'Footer.react');
       var component = TestUtils.renderIntoDocument(<Footer />);
 
       it('Ensure component renders minimum elements', function () {

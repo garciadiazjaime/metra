@@ -7,7 +7,7 @@ describe('Render Schedule Component', function() {
   var TestUtils = React.addons.TestUtils;
 
   describe('Render Schedule Component', function() {
-    var Schedule = require(srcFolder + 'Schedule.react.jsx');
+    var Schedule = require(srcFolder + 'Schedule.react');
     Schedule.contextTypes = {};
     var component = TestUtils.renderIntoDocument(<Schedule />);
 

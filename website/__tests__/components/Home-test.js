@@ -7,7 +7,7 @@ describe('Render Home Component', function() {
   var TestUtils = React.addons.TestUtils;
 
   describe('Render Home Component', function() {
-    var Home = require(srcFolder + 'Home.react.jsx');
+    var Home = require(srcFolder + 'Home.react');
     Home.contextTypes = {};
     var component = TestUtils.renderIntoDocument(<Home />);
 

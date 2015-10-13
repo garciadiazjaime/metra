@@ -5,9 +5,9 @@ import {Row, Col} from 'react-bootstrap';
 export default class RideTable extends React.Component {
 
   getRideRender(data) {
-    return data.map(function(item, i){
-      return(
-        <Row key={i}>
+    return data.map(function(item, index) {
+      return (
+        <Row key={index}>
           <Col xs={4}>{item.time_start.toLowerCase()}</Col>
           <Col xs={4}>{item.time_end.toLowerCase()}</Col>
           <Col xs={2}><span className="smallerText">{item.train_num}</span></Col>
@@ -32,4 +32,10 @@ export default class RideTable extends React.Component {
       </div>
     );
   }
+}
+
+RideTable.propTypes = {
+  id: React.PropTypes.string,
+  data: React.PropTypes.array,
 };
+
